@@ -14,6 +14,8 @@ class Feed extends Component {
     feed: []
   };
 
+  socket;
+
   async componentDidMount() {
     this.registerToSocket();
 
@@ -22,16 +24,20 @@ class Feed extends Component {
     this.setState({ feed: response.data });
   }
 
+  componentWillUnmount() {
+    this.socket.disconnect();
+  }
+
   registerToSocket = () => {
-    const socket = io('http://localhost:3333');
+    this.socket = io('http://localhost:3333');
 
     // post, like
 
-    socket.on('post', newPost => {
+    this.socket.on('post', newPost => {
       this.setState({ feed: [newPost, ...this.state.feed] });
     });
 
-    socket.on('like', likedPost => {
+    this.socket.on('like', likedPost => {
       this.setState({ 
         feed: this.state.feed.map(post =>
             post._id === likedPost._id ? likedPost : post

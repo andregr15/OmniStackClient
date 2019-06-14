@@ -23,9 +23,6 @@ class New extends Component {
     data.append('description', this.state.description);
     data.append('hashtags', this.state.hashtags);
 
-    console.log(this.state);
-    console.log(data);
-
     await api.post('posts', data);
 
     this.props.history.push('/');
