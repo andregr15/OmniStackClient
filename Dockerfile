@@ -1,4 +1,4 @@
-FROM node:11.4.0-alpine
+FROM node:11.14.0-alpine
 
 ENV INSTALL_PATH /app
 
